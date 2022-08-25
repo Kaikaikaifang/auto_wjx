@@ -15,28 +15,67 @@ import conf
 
 def choose_answer():
     try:
-        choose_one(1)  # 各项均为相同概率，可省略不写。
-        choose_one(2, [0.1, 0.2, 0.5, 0.2])
-        choose_one(3, exclude=[2, 3])  # 排除第 3 题中，第 2, 3 个选项。
-        choose_one(4, [0.4, 0.1, 0.2, 0.1, 0.2])
-        choose_one(5, [0.2, 0.2, 0.1, 0.3, 0.2])
-        choose_one(6, [0.25, 0.25, 0.25, 0.25])
-        choose_one(7, [0.3, 0.2, 0.1, 0.4])
-        choose_one(8, [0.2, 0.6, 0.2])
-        choose_multiple(9, [0.3, 0.25, 0.2, 0.125, 0.125], 3)
-        choose_multiple(10, [0.3, 0.25, 0.2, 0.15, 0.1])
-        choose_one(11, [0.1, 0.1, 0.2, 0.6])
-        choose_one(12, [0.2, 0.8])
-        choose_multiple(13, [0.4, 0.2, 0.3, 0.1], 2)
-        choose_multiple(14, [0.3, 0.3, 0.3, 0.1])
-        choose_multiple(15, [0.2, 0.2, 0.1, 0.2, 0.2, 0.1])
-        choose_multiple(16, [0.1, 0.2, 0.1, 0.3, 0.2, 0.1])
-        choose_multiple(17, [0.25, 0.25, 0.25, 0.25])
-        choose_multiple(18, [0.3, 0.3, 0.3, 0.1])
-        choose_multiple(19, [0.2, 0.1, 0.3, 0, 0.1, 0.2, 0.1], 3)  # 非相同概率时，没必要用 exclude。
-        choose_multiple(20)  # 各项均为相同概率，可省略不写。
-        choose_one(21, [0.2, 0.4, 0.3, 0.1])
-    except NoSuchElementException:
+        choose_one(1, [0.2, 0.8, 0, 0])  # 各项均为相同概率，可省略不写。
+        choose_one(2, [0.5, 0.5])
+        choose_one(3)
+        choose_one(4, [0.3, 0.5, 0.2, 0])
+        choose_one(5, [0.9, 0.1])
+        choose_one(6, [0.4, 0.5, 0.1])
+        choose_one(7, [0.9, 0.1])
+        choose_one(8, [0.6, 0.4])
+        choose_one(9, [0.4, 0.6])
+        choose_one(10, [1, 0])
+        choose_one(11, [0.7, 0.2, 0.1])
+        choose_one(12, [0, 0, 0.3, 0.3, 0.2, 0.2])
+        choose_one(13, [1, 0])
+        choose_one(14, [0.2, 0.8])
+        choose_one(15, [0.7, 0.3])
+        choose_one(16, [1, 0])
+        choose_one(17, [0.5, 0.4, 0, 0.1])
+        choose_one(18, [0.1, 0.2, 0.3, 0.2, 0.2])
+        choose_one(19, [0.8, 0.2, 0, 0])
+        choose_one(20, [0.2, 0.1, 0.3, 0.2, 0.2])
+        choose_one(21, [0.3, 0.3, 0.2, 0.2])
+        choose_one(22, [0.2, 0.3, 0.3, 0.2])
+        choose_one(23, [0.2, 0.2, 0.2, 0.4])
+        choose_multiple(24)
+        choose_one(25, [0, 0, 0.4, 0.6])
+        choose_multiple(26, [0.35, 0.44, 0.2, 0.01])
+        choose_multiple(27, exclude=[5])
+        choose_multiple(28)
+        choose_multiple(29, [0.01, 0.45, 0.54])
+        choose_multiple(30)
+        choose_multiple(31, [0.01, 0.43, 0.54, 0.02])
+        choose_one(32, [0.2, 0.4, 0.3, 0.1])
+        choose_one(33, [0.2, 0.7, 0.1])
+        choose_multiple(34, [0.01, 0.25, 0.34, 0.4])
+        choose_multiple(35, [0.3, 0.1, 0.4, 0.2, 0], 4)
+        # driver.find_element(By.XPATH, '//*[@id="tqq35_5"]').send_keys('无')
+        choose_one(36, [0.2, 0.35, 0.25, 0.2])
+        choose_one(37, [0.3, 0.7])
+        choose_one(38, [0.4, 0.6])
+        choose_one(39, [0, 1])
+        choose_one(40, [1, 0])
+        choose_one(41, [0.8, 0.2, 0, 0])
+        choose_one(42, [0.4, 0.4, 0.2])
+        choose_one(43, [0.3, 0.3, 0.3, 0.1])
+        choose_one(44, [0.6, 0.4])
+        choose_one(45)
+        choose_multiple(46, [0.01, 0.25, 0.34, 0.4])
+        choose_one(47, [0.5, 0.2, 0.3, 0])
+        choose_multiple(48)
+        choose_one(49, [0, 0.5, 0.5, 0])
+        choose_multiple(50)
+        write_blank()  # 填写无
+        # choose_multiple(14, [0.3, 0.3, 0.3, 0.1])
+        # choose_multiple(15, [0.2, 0.2, 0.1, 0.2, 0.2, 0.1])
+        # choose_multiple(16, [0.1, 0.2, 0.1, 0.3, 0.2, 0.1])
+        # choose_multiple(17, [0.25, 0.25, 0.25, 0.25])
+        # choose_multiple(18, [0.3, 0.3, 0.3, 0.1])
+        # choose_multiple(19, [0.2, 0.1, 0.3, 0, 0.1, 0.2, 0.1], 3)  # 非相同概率时，没必要用 exclude。
+        # choose_multiple(20)  # 各项均为相同概率，可省略不写。
+        # choose_one(21, [0.2, 0.4, 0.3, 0.1])
+    except NoSuchElementException as e:
         logging.error("任务执行失败，请检查配置。")
 
 
@@ -67,6 +106,9 @@ def choose_one(question_number, question_probability=None, exclude=None):
     )
     el_checked = driver.find_element(By.XPATH, f"//*[@id=\"div{question_number}\"]/div[2]/div[{chosen_number}]")
     el_checked.click()
+    # 随机停顿
+    # rt = random.randint(10, 100)
+    # time.sleep(rt / 100)
 
 
 def choose_multiple(question_number, question_probability=None, restrict=10000, exclude=None):
@@ -82,6 +124,17 @@ def choose_multiple(question_number, question_probability=None, restrict=10000, 
     )
     for i in chosen_number:
         driver.find_element(By.XPATH, f"//*[@id=\"div{question_number}\"]/div[2]/div[{i}]").click()
+    # 随机停顿
+    # rt = random.randint(10, 100)
+    # time.sleep(rt / 100)
+
+
+def write_blank():
+    """填写内容"""
+    driver.find_element(By.XPATH, '//*[@id="q51"]').send_keys('无')
+    # 随机停顿
+    # rt = random.randint(10, 100)
+    # time.sleep(rt / 100)
 
 
 def slider_move(loop_index, dest=380):
@@ -101,6 +154,19 @@ def slider_move(loop_index, dest=380):
         logging.error(f"第 {loop_index} 次请求执行失败！")
 
 
+def check_element_exists(element: str) -> bool:
+    """ 检查元素是否存在，若不存在会抛出异常
+
+    :param element: id
+    :return: Boolean
+    """
+    try:
+        driver.find_element(By.XPATH, element)
+        return True
+    except Exception as e:
+        return False
+
+
 def main():
     try:
         for i in range(loop_count):
@@ -112,8 +178,9 @@ def main():
             choose_answer()
             driver.find_element(By.XPATH, '//*[@id="ctlNext"]').click()
             time.sleep(0.5)
-            driver.find_element(By.XPATH, '//*[@id="alert_box"]/div[2]/div[2]/button').click()
-            driver.find_element(By.XPATH, '//*[@id="rectMask"]').click()
+            if check_element_exists('//*[@id="alert_box"]/div[2]/div[2]/button'):
+                driver.find_element(By.XPATH, '//*[@id="alert_box"]/div[2]/div[2]/button').click()
+                driver.find_element(By.XPATH, '//*[@id="rectMask"]').click()
             print(f"第 {i} 次任务执行成功。")
             try:
                 WebDriverWait(driver, 15).until(
@@ -121,8 +188,9 @@ def main():
                 )
             except TimeoutException:
                 slider_move(i, dest=380)  # 若验证码逃逸失败，请自行调教参数 dest
-    except Exception:
-        logging.error("任务执行错误，正在退出任务。")
+    except Exception as e:
+        print('error: ', e)
+        logging.error("任务执行错误，正在退出任务: ")
     finally:
         driver.close()
         input()
@@ -134,9 +202,8 @@ if __name__ == '__main__':
     opt = webdriver.ChromeOptions()
     opt.add_experimental_option('excludeSwitches', ['enable-automation'])
     opt.add_experimental_option('useAutomationExtension', False)
-    # driver = webdriver.Chrome(executable_path=r'./chromedriver', options=opt)
-    # 库主估计是 Linux 党，鉴于大多数非计算计的同学使用 Windows，为了降低使用门槛，注释了该行。
-    driver = webdriver.Chrome(options=opt)  # Windows下，将对应版本的 chromedriver 放置在 python 根目录，默认启用该行。
+    driver = webdriver.Chrome(options=opt)
+    # driver = webdriver.Safari(options=opt)
     driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument',
                            {'source': 'Object.defineProperty(navigator, "webdriver", {get: () => undefined})'})
     np.random.seed(int(time.time()))
