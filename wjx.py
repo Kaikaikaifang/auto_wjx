@@ -17,27 +17,27 @@ import conf
 
 def choose_answer():
     try:
-        choose_one(1, [0.5, 0.5])  # 各项均为相同概率，可省略不写。
-        choose_one(2, [0.3, 0.4, 0.2, 0.1])
-        choose_one(3, [0.3, 0.4, 0.2, 0.1])
-        choose_one(4, [0.3, 0.6, 0.1])
-        choose_one(5, [0.3, 0.5, 0.1, 0.1])
-        choose_one(6, [0.3, 0.5, 0.1, 0.1])
-        choose_one(7, [0.9, 0.1])
-        choose_one(8, [0.3, 0.5, 0.1, 0.1])
-        choose_one(9, [0.3, 0.3, 0.2, 0.1, 0.1])
-        choose_one(10, [0.3, 0.5, 0.1, 0.05, 0.05])
-        choose_one(11, [0.7, 0.2, 0.1])
-        choose_one(12, [1, 0])
-        choose_one(13, [0.3, 0.6, 0.1])
-        choose_one(14, [0.3, 0.5, 0.2, 0])
-        choose_one(15, [0.3, 0.6, 0.1])
-        choose_one(16, [0.3, 0.5, 0.2, 0])
-        choose_one(17, [0.5, 0.4, 0, 0.1])
-        choose_multiple(18, [0.1, 0.2, 0.3, 0.1, 0.1, 0.1, 0.1])
-        choose_one(19, [0.1, 0.2, 0.3, 0.2, 0.2])
-        choose_multiple(20, [0.2, 0.1, 0.3, 0.2, 0.2])
-        choose_multiple(21, [0.1, 0.2, 0.3, 0.2, 0.1, 0.1])
+        choose_multiple(1, [0.18, 0.14, 0.2, 0.23, 0.08, 0.1, 0.07])  # 各项均为相同概率，可省略不写。
+        choose_multiple(2, [0.10, 0.13, 0.13, 0.11, 0.05, 0.09, 0.17, 0.10, 0.12], num=3)
+        choose_one(3, [0.79, 0.2, 0.007, 0.003])
+        choose_multiple(4, [0.1, 0.2, 0.3, 0.15, 0.05, 0.2])
+        choose_multiple(5, [0.13, 0.2, 0.06, 0.13, 0.12, 0.11, 0.09, 0.12, 0.04], num=3)
+        choose_one(6, [0.356, 0.122, 0.149, 0.281, 0.092])
+        choose_one(7, [0.541, 0.381, 0.076, 0.002])
+        choose_one(8, [0.320, 0.321, 0.329, 0.01, 0.02])
+        choose_multiple(9, [0.33, 0.33, 0.34])
+        # choose_one(10, [0.3, 0.5, 0.1, 0.05, 0.05])
+        # choose_one(11, [0.7, 0.2, 0.1])
+        # choose_one(12, [1, 0])
+        # choose_one(13, [0.3, 0.6, 0.1])
+        # choose_one(14, [0.3, 0.5, 0.2, 0])
+        # choose_one(15, [0.3, 0.6, 0.1])
+        # choose_one(16, [0.3, 0.5, 0.2, 0])
+        # choose_one(17, [0.5, 0.4, 0, 0.1])
+        # choose_multiple(18, [0.1, 0.2, 0.3, 0.1, 0.1, 0.1, 0.1])
+        # choose_one(19, [0.1, 0.2, 0.3, 0.2, 0.2])
+        # choose_multiple(20, [0.2, 0.1, 0.3, 0.2, 0.2])
+        # choose_multiple(21, [0.1, 0.2, 0.3, 0.2, 0.1, 0.1])
         # choose_one(22, [0.2, 0.3, 0.3, 0.2])
         # choose_one(23, [0.2, 0.2, 0.2, 0.4])
         # choose_multiple(24)
@@ -113,19 +113,27 @@ def choose_one(question_number, question_probability=None, exclude=None):
     # time.sleep(rt / 100)
 
 
-def choose_multiple(question_number, question_probability=None, restrict=10000, exclude=None):
+def choose_multiple(question_number, question_probability=None, restrict=10000, exclude=None, num=0):
+    """
+    @param question_number: int
+    @param question_probability: [] # If you set it None, It will auto generate an averages list.
+    @param restrict: int # The max number of choices you want to choose.
+    @param exclude: [] # A list which question index you want to exclude.
+    @param num: int # The number of choices you want to choose.
+    """
     el_options = driver.find_elements(By.XPATH, f"//*[@id=\"div{question_number}\"]/div[2]/div")
     choices_num = len(el_options)
     if not question_number:
         question_probability = probabilities_generator(choices_num, exclude=exclude)
+    size = num if num else random.randint(1, min(restrict, choices_num))
     chosen_number = np.random.choice(
         a=list(range(1, choices_num + 1)),
         p=question_probability,
-        size=random.randint(1, min(restrict, choices_num)),
+        size=size,
         replace=False
     )
     for i in chosen_number:
-        driver.find_element(By.XPATH, f"//*[@id=\"div{question_number}\"]/div[2]/div[{i}]").click()
+        driver.find_element(By.XPATH, f"//*[@id=\"div{question_number}\"]/div[2]/div[{i}]/span/a").click()
     # 随机停顿
     # rt = random.randint(10, 100)
     # time.sleep(rt / 100)
@@ -145,9 +153,9 @@ def slider_move(loop_index, dest=380):
     :param dest: int # A position where you want to move.
     """
     try:
-        el_slider = WebDriverWait(driver, 10).until(
+        el_slider = driver.find_element(By.XPATH, "//*[@id='nc_1_n1z']") if check_element_exists("//*[@id='nc_1_n1z']") else WebDriverWait(driver, 10).until(
             presence_of_element_located(
-                (By.XPATH, "//*[@id='nc_1__scale_text']/span"))
+                (By.XPATH, "//*[@id='nc_1_n1z']"))
         )
         ActionChains(driver).click_and_hold(el_slider).perform()
         ActionChains(driver).move_by_offset(xoffset=dest, yoffset=0).perform()
@@ -169,6 +177,14 @@ def check_element_exists(element: str) -> bool:
         return False
 
 
+def skip_verify():
+    """跳过验证"""
+    if check_element_exists('//*[@id="layui-layer1"]/span/a'):
+        driver.find_element(By.XPATH, '//*[@id="layui-layer1"]/span/a').click()
+    if check_element_exists('//*[@id="rectMask"]'):
+        driver.find_element(By.XPATH, '//*[@id="rectMask"]').click()
+
+
 def main():
     try:
         for i in range(loop_count):
@@ -177,19 +193,20 @@ def main():
                 driver.find_element(By.XPATH, '//*[@id="confirm_box"]/div[2]/div[3]/button[1]').click()  # 取消提示
             except NoSuchElementException:
                 pass
+            if check_element_exists('//*[@id="layui-layer1"]/span/a'):
+                driver.find_element(By.XPATH, '//*[@id="layui-layer1"]/span/a').click()
             choose_answer()
             driver.find_element(By.XPATH, '//*[@id="ctlNext"]').click()
             time.sleep(0.5)
             # 跳过智能验证（点击按钮）
-            if check_element_exists('//*[@id="rectMask"]'):
-                driver.find_element(By.XPATH, '//*[@id="rectMask"]').click()
-            print(f"第 {i} 次任务执行成功。")
+            skip_verify()
             try:
-                WebDriverWait(driver, 15).until(
+                WebDriverWait(driver, 2).until(
                     ec.url_changes(question_url)
                 )
             except TimeoutException:
                 slider_move(i, dest=380)  # 若验证码逃逸失败，请自行调教参数 dest
+            print(f"第 {i} 次任务执行成功。")
     except Exception as e:
         print('error: ', e)
         logging.error("任务执行错误，正在退出任务: ")
