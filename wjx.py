@@ -182,7 +182,7 @@ def skip_verify():
     if check_element_exists('//*[@id="layui-layer1"]/span/a'):
         driver.find_element(By.XPATH, '//*[@id="layui-layer1"]/span/a').click()
     if check_element_exists('//*[@id="rectMask"]'):
-        driver.find_element(By.XPATH, '//*[@id="rectMask"]').click()
+        driver.find_element(By.XPATH, '//*[@id="rectMask"]/div[2]').click()
 
 
 def main():
@@ -193,8 +193,10 @@ def main():
                 driver.find_element(By.XPATH, '//*[@id="confirm_box"]/div[2]/div[3]/button[1]').click()  # 取消提示
             except NoSuchElementException:
                 pass
-            if check_element_exists('//*[@id="layui-layer1"]/span/a'):
-                driver.find_element(By.XPATH, '//*[@id="layui-layer1"]/span/a').click()
+            if check_element_exists('//*[@id="layui-layer1"]/div[3]/a[2]'):
+                # driver.find_element(By.XPATH, '//*[@id="layui-layer1"]/div[3]/a[2]').click()
+                driver.close()
+                return False
             choose_answer()
             driver.find_element(By.XPATH, '//*[@id="ctlNext"]').click()
             time.sleep(0.5)
@@ -210,9 +212,7 @@ def main():
     except Exception as e:
         print('error: ', e)
         logging.error("任务执行错误，正在退出任务: ")
-    finally:
-        # driver.close()
-        input()
+    return True
 
 
 if __name__ == '__main__':
@@ -228,4 +228,12 @@ if __name__ == '__main__':
     driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument',
                            {'source': 'Object.defineProperty(navigator, "webdriver", {get: () => undefined})'})
     np.random.seed(int(time.time()))
-    main()
+    while True:
+        if main():
+            break
+        else:
+            # include the path(./chromedriver) to ChromeDriver when instantiating webdriver.Chrome
+            driver = webdriver.Chrome(service=service, options=opt)
+            # driver = webdriver.Safari(options=opt)
+            driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument',
+                                   {'source': 'Object.defineProperty(navigator, "webdriver", {get: () => undefined})'})
