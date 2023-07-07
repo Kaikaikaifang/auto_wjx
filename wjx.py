@@ -203,7 +203,7 @@ def main():
             # 跳过智能验证（点击按钮）
             skip_verify()
             try:
-                WebDriverWait(driver, 2).until(
+                WebDriverWait(driver, 3).until(
                     ec.url_changes(question_url)
                 )
             except TimeoutException:
@@ -212,6 +212,7 @@ def main():
     except Exception as e:
         print('error: ', e)
         logging.error("任务执行错误，正在退出任务: ")
+        return False
     return True
 
 
