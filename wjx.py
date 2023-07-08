@@ -14,69 +14,40 @@ import time
 
 import conf
 
+# 计数器
+count = 0
+
 
 def choose_answer():
     try:
-        choose_multiple(1, [0.18, 0.14, 0.2, 0.23, 0.08, 0.1, 0.07])  # 各项均为相同概率，可省略不写。
-        choose_multiple(2, [0.10, 0.13, 0.13, 0.11, 0.05, 0.09, 0.17, 0.10, 0.12], num=3)
-        choose_one(3, [0.79, 0.2, 0.007, 0.003])
-        choose_multiple(4, [0.1, 0.2, 0.3, 0.15, 0.05, 0.2])
-        choose_multiple(5, [0.13, 0.2, 0.06, 0.13, 0.12, 0.11, 0.09, 0.12, 0.04], num=3)
-        choose_one(6, [0.356, 0.122, 0.149, 0.281, 0.092])
-        choose_one(7, [0.541, 0.381, 0.076, 0.002])
-        choose_one(8, [0.320, 0.321, 0.329, 0.01, 0.02])
-        choose_multiple(9, [0.33, 0.33, 0.34])
-        # choose_one(10, [0.3, 0.5, 0.1, 0.05, 0.05])
-        # choose_one(11, [0.7, 0.2, 0.1])
-        # choose_one(12, [1, 0])
-        # choose_one(13, [0.3, 0.6, 0.1])
-        # choose_one(14, [0.3, 0.5, 0.2, 0])
-        # choose_one(15, [0.3, 0.6, 0.1])
-        # choose_one(16, [0.3, 0.5, 0.2, 0])
-        # choose_one(17, [0.5, 0.4, 0, 0.1])
-        # choose_multiple(18, [0.1, 0.2, 0.3, 0.1, 0.1, 0.1, 0.1])
-        # choose_one(19, [0.1, 0.2, 0.3, 0.2, 0.2])
-        # choose_multiple(20, [0.2, 0.1, 0.3, 0.2, 0.2])
-        # choose_multiple(21, [0.1, 0.2, 0.3, 0.2, 0.1, 0.1])
-        # choose_one(22, [0.2, 0.3, 0.3, 0.2])
-        # choose_one(23, [0.2, 0.2, 0.2, 0.4])
+        choose_one(1, [0.5, 0.5])
+        choose_one(2, [0.3, 0.4, 0.2, 0.1])
+        choose_one(3, [0.3, 0.4, 0.2, 0.1])
+        choose_one(4, [0.3, 0.6, 0.1])
+        choose_one(5, [0.3, 0.5, 0.1, 0.1])
+        choose_one(6, [0.3, 0.5, 0.1, 0.1])
+        choose_one(7, [0.9, 0.1])
+        choose_one(8, [0.3, 0.5, 0.1, 0.1])
+        choose_one(9, [0.3, 0.3, 0.2, 0.1, 0.1])
+        choose_one(10, [0.3, 0.5, 0.1, 0.05, 0.05])
+        choose_one(11, [0.7, 0.2, 0.1])
+        choose_one(12, [1, 0])
+        choose_one(13, [0.3, 0.6, 0.1])
+        choose_one(14, [0.3, 0.5, 0.2, 0])
+        choose_one(15, [0.3, 0.6, 0.1])
+        choose_one(16, [0.3, 0.5, 0.2, 0])
+        choose_one(17, [0.5, 0.4, 0, 0.1])
+        choose_multiple(18, [0.1, 0.2, 0.3, 0.1, 0.1, 0.1, 0.1])
+        choose_one(19, [0.1, 0.2, 0.3, 0.2, 0.2])
+        choose_multiple(20, [0.2, 0.1, 0.3, 0.2, 0.2])
+        choose_multiple(21, [0.1, 0.2, 0.3, 0.2, 0.1, 0.1])
+        # choose_multiple(5, [0.13, 0.2, 0.06, 0.13, 0.12, 0.11, 0.09, 0.12, 0.04], num=3)  # 指定选择的个数
         # choose_multiple(24)
-        # choose_one(25, [0, 0, 0.4, 0.6])
-        # choose_multiple(26, [0.35, 0.44, 0.2, 0.01])
         # choose_multiple(27, exclude=[5])
-        # choose_multiple(28)
-        # choose_multiple(29, [0.01, 0.45, 0.54])
-        # choose_multiple(30)
-        # choose_multiple(31, [0.01, 0.43, 0.54, 0.02])
-        # choose_one(32, [0.2, 0.4, 0.3, 0.1])
-        # choose_one(33, [0.2, 0.7, 0.1])
-        # choose_multiple(34, [0.01, 0.25, 0.34, 0.4])
-        # choose_multiple(35, [0.3, 0.1, 0.4, 0.2, 0], 4)
-        # # driver.find_element(By.XPATH, '//*[@id="tqq35_5"]').send_keys('无')
-        # choose_one(36, [0.2, 0.35, 0.25, 0.2])
-        # choose_one(37, [0.3, 0.7])
-        # choose_one(38, [0.4, 0.6])
-        # choose_one(39, [0, 1])
-        # choose_one(40, [1, 0])
-        # choose_one(41, [0.8, 0.2, 0, 0])
-        # choose_one(42, [0.4, 0.4, 0.2])
-        # choose_one(43, [0.3, 0.3, 0.3, 0.1])
-        # choose_one(44, [0.6, 0.4])
-        # choose_one(45)
-        # choose_multiple(46, [0.01, 0.25, 0.34, 0.4])
-        # choose_one(47, [0.5, 0.2, 0.3, 0])
-        # choose_multiple(48)
-        # choose_one(49, [0, 0.5, 0.5, 0])
         # choose_multiple(50)
         # write_blank()  # 填写无
-        # choose_multiple(14, [0.3, 0.3, 0.3, 0.1])
-        # choose_multiple(15, [0.2, 0.2, 0.1, 0.2, 0.2, 0.1])
-        # choose_multiple(16, [0.1, 0.2, 0.1, 0.3, 0.2, 0.1])
-        # choose_multiple(17, [0.25, 0.25, 0.25, 0.25])
-        # choose_multiple(18, [0.3, 0.3, 0.3, 0.1])
         # choose_multiple(19, [0.2, 0.1, 0.3, 0, 0.1, 0.2, 0.1], 3)  # 非相同概率时，没必要用 exclude。
         # choose_multiple(20)  # 各项均为相同概率，可省略不写。
-        # choose_one(21, [0.2, 0.4, 0.3, 0.1])
     except NoSuchElementException as e:
         logging.error("任务执行失败，请检查配置。")
 
@@ -147,9 +118,8 @@ def write_blank():
     # time.sleep(rt / 100)
 
 
-def slider_move(loop_index, dest=380):
+def slider_move(dest=380):
     """
-    :param loop_index: int
     :param dest: int # A position where you want to move.
     """
     try:
@@ -161,7 +131,7 @@ def slider_move(loop_index, dest=380):
         ActionChains(driver).move_by_offset(xoffset=dest, yoffset=0).perform()
         ActionChains(driver).release().perform()
     except (TimeoutException, ElementClickInterceptedException):
-        logging.error(f"第 {loop_index} 次请求执行失败！")
+        pass
 
 
 def check_element_exists(element: str) -> bool:
@@ -186,6 +156,7 @@ def skip_verify():
 
 
 def main():
+    global count
     try:
         for i in range(loop_count):
             driver.get(question_url)
@@ -194,7 +165,8 @@ def main():
             except NoSuchElementException:
                 pass
             if check_element_exists('//*[@id="layui-layer1"]/div[3]/a[2]'):
-                # driver.find_element(By.XPATH, '//*[@id="layui-layer1"]/div[3]/a[2]').click()
+                # 检测到重复填写相同问卷：重启浏览器
+                logging.error("检测到重复填写相同问卷：重启浏览器")
                 driver.close()
                 return False
             choose_answer()
@@ -207,12 +179,18 @@ def main():
                     ec.url_changes(question_url)
                 )
             except TimeoutException:
-                slider_move(i, dest=380)  # 若验证码逃逸失败，请自行调教参数 dest
-            print(f"第 {i} 次任务执行成功。")
+                # 滑动滑条
+                slider_move(dest=380)  # 若验证码逃逸失败，请自行调教参数 dest
+            count += 1
+            if count == loop_count:
+                print('任务完成，正在退出任务: 1')
+                driver.close()
+                return True
     except Exception as e:
         print('error: ', e)
         logging.error("任务执行错误，正在退出任务: ")
         return False
+    print('任务完成，正在退出任务: 2')
     return True
 
 
@@ -223,16 +201,18 @@ if __name__ == '__main__':
     opt.add_experimental_option('excludeSwitches', ['enable-automation'])
     opt.add_experimental_option('useAutomationExtension', False)
     service = Service('./chromedriver')
+    # 首次配置浏览器
     # include the path(./chromedriver) to ChromeDriver when instantiating webdriver.Chrome
     driver = webdriver.Chrome(service=service, options=opt)
     # driver = webdriver.Safari(options=opt)
     driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument',
                            {'source': 'Object.defineProperty(navigator, "webdriver", {get: () => undefined})'})
-    np.random.seed(int(time.time()))
     while True:
+        #
         if main():
             break
         else:
+            # 重新配置浏览器
             # include the path(./chromedriver) to ChromeDriver when instantiating webdriver.Chrome
             driver = webdriver.Chrome(service=service, options=opt)
             # driver = webdriver.Safari(options=opt)
