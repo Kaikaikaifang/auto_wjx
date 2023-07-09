@@ -1,6 +1,6 @@
 # 自动刷问卷星
 
-fork自项目：[huzige433/auto_wjx](https://github.com/huzige433/auto_wjx)
+fork自项目：[swpfY/auto_wjx](https://github.com/swpfY/auto_wjx)
 
 ## 使用
 
