@@ -20,27 +20,27 @@ count = 0
 
 def choose_answer():
     try:
-        choose_one(1, [0.5, 0.5])
-        choose_one(2, [0.3, 0.4, 0.2, 0.1])
-        choose_one(3, [0.3, 0.4, 0.2, 0.1])
-        choose_one(4, [0.3, 0.6, 0.1])
-        choose_one(5, [0.3, 0.5, 0.1, 0.1])
-        choose_one(6, [0.3, 0.5, 0.1, 0.1])
-        choose_one(7, [0.9, 0.1])
-        choose_one(8, [0.3, 0.5, 0.1, 0.1])
-        choose_one(9, [0.3, 0.3, 0.2, 0.1, 0.1])
-        choose_one(10, [0.3, 0.5, 0.1, 0.05, 0.05])
-        choose_one(11, [0.7, 0.2, 0.1])
-        choose_one(12, [1, 0])
-        choose_one(13, [0.3, 0.6, 0.1])
-        choose_one(14, [0.3, 0.5, 0.2, 0])
-        choose_one(15, [0.3, 0.6, 0.1])
-        choose_one(16, [0.3, 0.5, 0.2, 0])
-        choose_one(17, [0.5, 0.4, 0, 0.1])
-        choose_multiple(18, [0.1, 0.2, 0.3, 0.1, 0.1, 0.1, 0.1])
-        choose_one(19, [0.1, 0.2, 0.3, 0.2, 0.2])
-        choose_multiple(20, [0.2, 0.1, 0.3, 0.2, 0.2])
-        choose_multiple(21, [0.1, 0.2, 0.3, 0.2, 0.1, 0.1])
+        choose_one(1, [0.15, 0.5, 0.1, 0.15, 0.1])
+        choose_one(2, [0.1, 0.2, 0.5, 0.15, 0.05])
+        choose_one(3, [0.125, 0.25, 0.625, 0.0])
+        choose_one(4, [0.26, 0.48, 0.23, 0.03])
+        choose_multiple(5, [0.225, 0.18, 0.16, 0.17, 0.12, 0.135, 0.01], restrict=6)
+        choose_multiple(6, [0.16, 0.17, 0.2, 0.2, 0.1, 0.16, 0.01])
+        choose_multiple(7, [0.21, 0.23, 0.24, 0.14, 0.18, 0.0])
+        choose_one(8, [0.33, 0.25, 0.17, 0.25, 0.0, 0.0])
+        choose_multiple(9, [0.175, 0.2, 0.16, 0.2, 0.15, 0.115, 0])
+        choose_one(10, [0.3, 0.4, 0.25, 0.05])
+        choose_one(11, [0.3, 0.25, 0.4, 0.05])
+        choose_one(12, [0.67, 0.3, 0.03, 0.0])
+        choose_one(13, [0.46, 0.34, 0.05, 0.15])
+        choose_multiple(14, [0.14, 0.17, 0.21, 0.17, 0.14, 0.16, 0.01, 0.0])
+        choose_multiple(15, [0.12, 0.16, 0.14, 0.21, 0.11, 0.13, 0.13, 0.0])
+        choose_one(16, [0.71, 0.29])
+        choose_one(17, [0.48, 0.22, 0.2, 0.1])
+        choose_multiple(18, [0.29, 0.28, 0.25, 0.18, 0.0])
+        choose_one(19, [0.21, 0.21, 0.17, 0.41, 0.0])
+        choose_multiple(20, [0.215, 0.165, 0.23, 0.21, 0.18, 0.0])
+        choose_multiple(21, [0.255, 0.31, 0.255, 0.18, 0.0])
         # choose_multiple(5, [0.13, 0.2, 0.06, 0.13, 0.12, 0.11, 0.09, 0.12, 0.04], num=3)  # 指定选择的个数
         # choose_multiple(24)
         # choose_multiple(27, exclude=[5])
@@ -94,9 +94,15 @@ def choose_multiple(question_number, question_probability=None, restrict=10000, 
     """
     el_options = driver.find_elements(By.XPATH, f"//*[@id=\"div{question_number}\"]/div[2]/div")
     choices_num = len(el_options)
+    not_zero_num = len(el_options)
     if not question_number:
         question_probability = probabilities_generator(choices_num, exclude=exclude)
     size = num if num else random.randint(1, min(restrict, choices_num))
+    for i in question_probability:
+        if not i:
+            not_zero_num -= 1
+    size = size if size <= not_zero_num else not_zero_num
+    print(question_number, question_probability, size)
     chosen_number = np.random.choice(
         a=list(range(1, choices_num + 1)),
         p=question_probability,
@@ -200,7 +206,7 @@ if __name__ == '__main__':
     opt = Options()
     opt.add_experimental_option('excludeSwitches', ['enable-automation'])
     opt.add_experimental_option('useAutomationExtension', False)
-    service = Service('./chromedriver')
+    service = Service(executable_path='./chromedriver')
     # 首次配置浏览器
     # include the path(./chromedriver) to ChromeDriver when instantiating webdriver.Chrome
     driver = webdriver.Chrome(service=service, options=opt)
