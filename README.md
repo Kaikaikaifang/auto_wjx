@@ -54,7 +54,6 @@ choose_multiple(题号, [概率1, 概率2, ...], 最多选项限制（可选参�
 2. `Run` -> `Edit Configurations...` -> `Allow multiple instances` 勾选 -> `Apply` -> `OK`
 3. 运行 `wjx.py`，多点几次运行按钮，点一次开一个实例
 
-
 ## 一些问题
 
 #### 问卷星智能验证
@@ -72,3 +71,7 @@ driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument',
 每刷几十次，问卷星会根据ip设置右滑验证码。解决办法可以通过ip池，或者每个几十次换一次VPN节点。
 
 同时当前项目代码中实现了右滑验证码逃逸。
+
+#### windows and wsl
+
+在 win 系统下使用 pycharm 运行程序时，需指定 python 解释器，应指定位于 win 系统下的 python 解释器，切记不可选择 wsl 下的解释器，因为我们的 chrome 浏览器以及 chromedriver 都是安装在 win 系统下的，使用 wsl 下的解释器会出现找不到 chromedriver PATH 的错误。
