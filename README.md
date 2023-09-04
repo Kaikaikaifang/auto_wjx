@@ -56,7 +56,7 @@ choose_multiple(题号, [概率1, 概率2, ...], 最多选项限制（可选参�
 
 ## 一些问题
 
-#### 问卷星智能验证
+### 问卷星智能验证
 
 使用`selenium`会给`window.navigator`添加`webdriver`属性，问卷星网页通过检测`window.navigator`对象是否包含`webdriver`这个属性来进行判断，设置一段代码将此属性设置为`undefined`：
 
@@ -75,3 +75,19 @@ driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument',
 #### windows and wsl
 
 在 win 系统下使用 pycharm 运行程序时，需指定 python 解释器，应指定位于 win 系统下的 python 解释器，切记不可选择 wsl 下的解释器，因为我们的 chrome 浏览器以及 chromedriver 都是安装在 win 系统下的，使用 wsl 下的解释器会出现找不到 chromedriver PATH 的错误。
+
+#### 被检测到重复提交问卷
+
+两个方案：
+
+1. 使用网上免费的 ip 池中的 ip 作为代理发送请求，实际测了一下，网上免费的 ip 大多数是用不了的，除非用付费的，不然速度贼慢。
+
+2. 借助 clash 的节点切换实现请求 ip 的切换，需要注意的一点是 `wjx.cn` 位于国内，`Rule` 模式下默认是不经过代理的，需要添加相关配置：
+
+    + Clash for windows ——> Profiles ————> 右键当前配置文件 ————> Edit
+
+    + 文件最下方找到 rules 配置项
+
+    + 添加 - DOMAIN-SUFFIX,wjx.cn,Proxy
+
+    > 需要注意的是，根据科学上网提供商的策略设置不同，`clash.py` 代码可能会需要微调。
