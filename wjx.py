@@ -21,7 +21,7 @@ count = 0
 IPS = ["139.224.56.162:1234"]
 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
 HEADER = {'User-Agent': UA}
-clash = Clash("http://127.0.0.1:49361", "2ec23a7c-b6a0-4244-ac01-6f6fa7c1c61d")
+clash = Clash("http://127.0.0.1:62274", "2ec23a7c-b6a0-4244-ac01-6f6fa7c1c61d")
 
 
 def get_proxy():
@@ -116,7 +116,6 @@ def choose_multiple(question_number, question_probability=None, restrict=10000, 
         if not i:
             not_zero_num -= 1
     size = size if size <= not_zero_num else not_zero_num
-    print(question_number, question_probability, size)
     chosen_number = np.random.choice(
         a=list(range(1, choices_num + 1)),
         p=question_probability,
@@ -187,7 +186,7 @@ def main():
             if check_element_exists('//*[@id="layui-layer1"]/div[3]/a[2]'):
                 # 检测到重复填写相同问卷：重启浏览器
                 logging.error("检测到重复填写相同问卷：重启浏览器")
-                # driver.close()
+                driver.close()
                 return False
             choose_answer()
             driver.find_element(By.XPATH, '//*[@id="ctlNext"]').click()
@@ -220,60 +219,23 @@ if __name__ == '__main__':
     opt = Options()
     opt.add_experimental_option('excludeSwitches', ['enable-automation'])
     opt.add_experimental_option('useAutomationExtension', False)
-    # opt.add_argument('blink-settings=imagesEnabled=false')
-    preferences = {
-        "webrtc.ip_handling_policy": "disable_non_proxied_udp",
-        "webrtc.multiple_routes_enabled": False,
-        "webrtc.nonproxied_udp_enabled": False,
-    }
-    opt.add_experimental_option("prefs", preferences)
-    # opt.add_experimental_option('whitelisted-ips', "")
-    ip = "http://127.0.0.1:7890"
-    print(f'====== {ip} =======')
-    # if ip and ip != "http://127.0.0.1:7890":
-    #     opt.add_argument(f"--proxy-server=http://{ip}")
-    # else:
-    # opt.add_argument('--headless')
+    opt.add_argument('--headless')
     opt.add_argument('--disable-gpu')
-    # opt.add_argument('--no-sandbox')
-    opt.add_argument('--disk-cache-size=0')
-    opt.add_argument("--whitelisted-ips=")
+    opt.add_argument('--no-sandbox')
+    opt.add_argument('--incognito')
+    opt.add_argument("disable-cache")
+    opt.add_argument('log-level=3')
+    opt.add_argument('disable-infobars')
     service = Service(executable_path='./chromedriver')
-    # 首次配置浏览器
-    # include the path(./chromedriver) to ChromeDriver when instantiating webdriver.Chrome
-    driver = webdriver.Chrome(service=service, options=opt, service_args=['--whitelisted-ips=""'])
-    # driver = webdriver.Safari(options=opt)
+    driver = webdriver.Chrome(service=service, options=opt)
     driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument',
                            {'source': 'Object.defineProperty(navigator, "webdriver", {get: () => undefined})'})
-    driver.delete_all_cookies()
     while True:
         #
         if main():
             break
         else:
-            # 重新配置浏览器
-            # include the path(./chromedriver) to ChromeDriver when instantiating webdriver.Chrome
-            # if ip and ip != "http://127.0.0.1:7890":
-            #     delete_proxy(ip)
-            # else:
             clash.auto_change_proxy("Proxy")
-            opt = Options()
-            opt.add_argument("--whitelisted-ips=''")
-            opt.add_experimental_option('excludeSwitches', ['enable-automation'])
-            opt.add_experimental_option('useAutomationExtension', False)
-            opt.add_experimental_option("prefs", preferences)
-            # ip = get_proxy() or "http://127.0.0.1:7890"
-            # print(f'====== {ip} =======')
-            if ip:
-                opt.add_argument(f"--proxy-server=http://{ip}")
-            # else:
-            # opt.add_argument('--headless')
-            opt.add_argument('--disable-gpu')
-            # opt.add_argument('--no-sandbox')
-            opt.add_argument('--disk-cache-size=0')
-            service = Service(executable_path='./chromedriver')
             driver = webdriver.Chrome(service=service, options=opt)
-            driver.delete_all_cookies()
-            # driver = webdriver.Safari(options=opt)
             driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument',
                                    {'source': 'Object.defineProperty(navigator, "webdriver", {get: () => undefined})'})

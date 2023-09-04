@@ -51,7 +51,7 @@ class Clash:
 
 
 if __name__ == "__main__":
-    clash = Clash("http://127.0.0.1:49361", "2ec23a7c-b6a0-4244-ac01-6f6fa7c1c61d")
+    clash = Clash("http://127.0.0.1:49710", "2ec23a7c-b6a0-4244-ac01-6f6fa7c1c61d")
     # proxies = clash.get_proxies()
     # print(fmt.format("proxies keys", proxies.keys()))
     clash.auto_change_proxy("Proxy")
