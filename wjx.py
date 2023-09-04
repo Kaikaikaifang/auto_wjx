@@ -11,11 +11,25 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver import ActionChains
 import numpy as np
 import time
-
+import requests
 import conf
+from clash import Clash
+
 
 # 计数器
 count = 0
+IPS = ["139.224.56.162:1234"]
+UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+HEADER = {'User-Agent': UA}
+clash = Clash("http://127.0.0.1:62274", "2ec23a7c-b6a0-4244-ac01-6f6fa7c1c61d")
+
+
+def get_proxy():
+    return requests.get("http://127.0.0.1:5010/get/").json().get("proxy")
+
+
+def delete_proxy(proxy):
+    requests.get("http://127.0.0.1:5010/delete/?proxy={}".format(proxy))
 
 
 def choose_answer():
@@ -102,7 +116,6 @@ def choose_multiple(question_number, question_probability=None, restrict=10000, 
         if not i:
             not_zero_num -= 1
     size = size if size <= not_zero_num else not_zero_num
-    print(question_number, question_probability, size)
     chosen_number = np.random.choice(
         a=list(range(1, choices_num + 1)),
         p=question_probability,
@@ -206,11 +219,15 @@ if __name__ == '__main__':
     opt = Options()
     opt.add_experimental_option('excludeSwitches', ['enable-automation'])
     opt.add_experimental_option('useAutomationExtension', False)
+    opt.add_argument('--headless')
+    opt.add_argument('--disable-gpu')
+    opt.add_argument('--no-sandbox')
+    opt.add_argument('--incognito')
+    opt.add_argument("disable-cache")
+    opt.add_argument('log-level=3')
+    opt.add_argument('disable-infobars')
     service = Service(executable_path='./chromedriver')
-    # 首次配置浏览器
-    # include the path(./chromedriver) to ChromeDriver when instantiating webdriver.Chrome
     driver = webdriver.Chrome(service=service, options=opt)
-    # driver = webdriver.Safari(options=opt)
     driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument',
                            {'source': 'Object.defineProperty(navigator, "webdriver", {get: () => undefined})'})
     while True:
@@ -218,9 +235,7 @@ if __name__ == '__main__':
         if main():
             break
         else:
-            # 重新配置浏览器
-            # include the path(./chromedriver) to ChromeDriver when instantiating webdriver.Chrome
+            clash.auto_change_proxy("Proxy")
             driver = webdriver.Chrome(service=service, options=opt)
-            # driver = webdriver.Safari(options=opt)
             driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument',
                                    {'source': 'Object.defineProperty(navigator, "webdriver", {get: () => undefined})'})
